@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button } from "react-bootstrap";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import login from "../../assets/images/login/login.svg";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Login = () => {
+  const { loginUser } = useContext(AuthContext);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    // getting form values
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    // firebase login
+    loginUser(email, password)
+      .then((res) => {
+        console.log(res.user);
+      })
+      .catch((err) => console.log(err.message));
+
+    // form value reset
+    e.target.reset();
+  };
   return (
     <>
       <div className="container w-75 mx-auto">
@@ -18,7 +38,7 @@ const Login = () => {
                 <h3 className="fw-semibold d-text">Welcome to Login</h3>
                 <img src="" alt="" />
               </div>
-              <form className="card-body">
+              <form className="card-body" onSubmit={handleLogin}>
                 <span className="fs-5 d-block pb-1">Email</span>
                 <div className="input-group mb-3">
                   <input
@@ -28,6 +48,7 @@ const Login = () => {
                     placeholder="Email"
                     aria-label="email"
                     aria-describedby="basic-addon1"
+                    required
                   />
                 </div>
                 <span className="fs-5 d-block pb-1">Password</span>
@@ -39,6 +60,7 @@ const Login = () => {
                     placeholder="Password"
                     aria-label="password"
                     aria-describedby="basic-addon2"
+                    required
                   />
                 </div>
                 <p className="text-danger pt-2">

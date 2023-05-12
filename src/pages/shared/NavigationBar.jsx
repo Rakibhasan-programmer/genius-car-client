@@ -5,7 +5,13 @@ import logo from "../../assets/logo.svg";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const NavigationBar = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((err) => console.log(err.message));
+  };
   return (
     <>
       <Navbar
@@ -69,17 +75,24 @@ const NavigationBar = () => {
               </NavLink>
             </Nav>
             <div className="d-flex align-items-center">
-              {user && user.email ? (
+              {user && (
                 <>
                   <Button variant="primary">{user?.email}</Button>
                 </>
+              )}
+              {user ? (
+                <Button
+                  className="mx-2"
+                  variant="danger"
+                  onClick={handleLogOut}
+                >
+                  Logout
+                </Button>
               ) : (
-                <>
-                  <Button variant="primary">Login</Button>
-                </>
+                <Link to={"/login"} className="btn btn-primary mx-2">Login</Link>
               )}
               <Link
-                className="btn btn-outline-warning px-3 ms-2"
+                className="btn btn-outline-warning px-3"
                 to={"/appointment"}
               >
                 Appointment
