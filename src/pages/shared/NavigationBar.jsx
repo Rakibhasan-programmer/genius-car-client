@@ -1,9 +1,11 @@
-import React from "react";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import React, { useContext } from "react";
+import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo.svg";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const NavigationBar = () => {
+  const { user } = useContext(AuthContext);
   return (
     <>
       <Navbar
@@ -67,8 +69,17 @@ const NavigationBar = () => {
               </NavLink>
             </Nav>
             <div className="d-flex align-items-center">
+              {user && user.email ? (
+                <>
+                  <Button variant="primary">{user?.email}</Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="primary">Login</Button>
+                </>
+              )}
               <Link
-                className="btn btn-outline-warning px-3"
+                className="btn btn-outline-warning px-3 ms-2"
                 to={"/appointment"}
               >
                 Appointment
