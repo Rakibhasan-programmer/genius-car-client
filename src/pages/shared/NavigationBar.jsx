@@ -1,26 +1,26 @@
 import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
+import logo from "../../assets/logo.svg";
 
 const NavigationBar = () => {
   return (
     <>
       <Navbar
         className="py-3 sticky-top"
-        bg="dark"
-        variant="dark"
+        bg="light"
+        variant="light"
         expand="lg"
         style={{ opacity: "0.94" }}
       >
         <Container>
           <NavLink to={"/"}>
-            Genius Car
-            {/* <img
-              style={{ width: "8rem" }}
+            <img
+              style={{ width: "3rem" }}
               src={logo}
               className="img-fluid"
               alt="Logo of this page"
-            ></img> */}
+            ></img>
           </NavLink>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
@@ -67,8 +67,11 @@ const NavigationBar = () => {
               </NavLink>
             </Nav>
             <div className="d-flex align-items-center">
-              <Link className="btn btn-primary px-3" to={"/login"}>
-                Login
+              <Link
+                className="btn btn-outline-warning px-3"
+                to={"/appointment"}
+              >
+                Appointment
               </Link>
             </div>
           </Navbar.Collapse>
