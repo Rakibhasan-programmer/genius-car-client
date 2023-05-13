@@ -77,7 +77,7 @@ const NavigationBar = () => {
             <div className="d-flex align-items-center">
               {user && (
                 <>
-                  <Button variant="primary">{user?.email}</Button>
+                  <Button variant="primary">{user?.displayName}</Button>
                 </>
               )}
               {user ? (

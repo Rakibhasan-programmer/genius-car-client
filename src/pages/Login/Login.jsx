@@ -18,7 +18,8 @@ const Login = () => {
     // firebase login
     loginUser(email, password)
       .then((res) => {
-        console.log(res.user);
+        const user = res.user;
+        // console.log(res.user);
       })
       .catch((err) => console.log(err.message));
 

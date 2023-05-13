@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Spinner } from "react-bootstrap";
 import ServiceCard from "./ServiceCard";
 
 const Service = () => {
   const [services, setServices] = useState([]);
+  const [loader, setLoader] = useState(true);
   useEffect(() => {
-    fetch("services.json")
+    fetch("http://localhost:5000/services")
       .then((res) => res.json())
-      .then((data) => setServices(data))
+      .then((data) => {
+        setServices(data);
+        setLoader(false);
+      })
       .catch((err) => console.log(err));
   }, []);
   return (
@@ -22,11 +26,17 @@ const Service = () => {
             ut corrupti?
           </p>
         </div>
-        <Row className="pt-5 g-4">
-          {services.map((service) => (
-            <ServiceCard key={service._id} service={service} />
-          ))}
-        </Row>
+        {loader ? (
+          <div className="text-center">
+            <Spinner variant="primary"></Spinner>
+          </div>
+        ) : (
+          <Row className="pt-5 g-4">
+            {services.map((service) => (
+              <ServiceCard key={service._id} service={service} />
+            ))}
+          </Row>
+        )}
       </Container>
     </>
   );

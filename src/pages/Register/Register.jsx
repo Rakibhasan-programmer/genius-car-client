@@ -4,7 +4,8 @@ import login from "../../assets/images/login/login.svg";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Register = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updateUser } = useContext(AuthContext);
+  
   // create user
   const handleRegister = (e) => {
     e.preventDefault();
@@ -17,10 +18,16 @@ const Register = () => {
 
     // create user
     createUser(email, password)
-    .then(res => {
-      console.log(res.user);
-    })
-    .catch(err => console.log(err.message))
+      .then((res) => {
+        const user = res.user;
+        // update user
+        user.displayName = name;
+        updateUser(name)
+          .then(() => {})
+          .catch((err) => console.log(err.message));
+        // console.log(res.user);
+      })
+      .catch((err) => console.log(err.message));
 
     // reseting form value
     e.target.reset();
