@@ -35,12 +35,37 @@ const Bookings = () => {
               });
 
               // updating the state
-              const remaining = bookings.filter(booking => booking._id !== id);
+              const remaining = bookings.filter(
+                (booking) => booking._id !== id
+              );
               setBookings(remaining);
             }
           });
       }
     });
+  };
+
+  const handleUpdateBooking = (id) => {
+    fetch(`http://localhost:5000/bookings/${id}`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ status: "confirm" }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.modifiedCount);
+        if (data.modifiedCount > 0) {
+          // update state
+          const remaining = bookings.filter((booking) => booking._id !== id);
+          const updated = bookings.find((booking) => booking._id === id);
+          updated.status = "confirm";
+          const newBookings = [updated, ...remaining];
+          setBookings(newBookings);
+        }
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <div className="container py-5">
@@ -66,9 +91,19 @@ const Bookings = () => {
               <td>{data?.price}</td>
               <td>{data?.date}</td>
               <td>
-                <Button className="btn-sm" variant="warning">
-                  Pending
-                </Button>
+                {data?.status === "confirm" ? (
+                  <Button className="btn-sm" variant="success">
+                    Confirmed
+                  </Button>
+                ) : (
+                  <Button
+                    className="btn-sm"
+                    variant="warning"
+                    onClick={() => handleUpdateBooking(data?._id)}
+                  >
+                    Pending
+                  </Button>
+                )}
                 <Button
                   className="btn-sm ms-2"
                   variant="danger"

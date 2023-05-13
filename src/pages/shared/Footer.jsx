@@ -100,8 +100,8 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <p className="text-center fw-light pt-5">
-          All rights reserved | &copy; 2023 cooking chronicles
+        <p className="text-center fw-light pt-3">
+          All rights reserved | &copy; 2023 Car Doctor
         </p>
       </footer>
     </>
