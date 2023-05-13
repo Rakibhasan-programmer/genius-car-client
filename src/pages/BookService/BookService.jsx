@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import swal from "sweetalert";
 
 const BookService = () => {
   const { user } = useContext(AuthContext);
@@ -9,8 +10,10 @@ const BookService = () => {
   const { _id, title, price, img } = services;
 
   const handleBookService = (e) => {
+    // prevent refreshing
     e.preventDefault();
 
+    // getting form data
     const name = e.target.name.value;
     const date = e.target.date.value;
     const email = e.target.email.value;
@@ -36,7 +39,11 @@ const BookService = () => {
       body: JSON.stringify(booking),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data))
+      .then((data) => {
+        if(data.insertedId){
+          swal("Good job!", "You clicked the button!", "success");
+        }
+      })
       .catch((err) => console.log(err));
 
     // form value reset

@@ -65,14 +65,16 @@ const NavigationBar = () => {
               >
                 Blog
               </NavLink>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive ? "active nav-link fw-bold px-3" : "nav-link px-3"
-                }
-                to={"/contact"}
-              >
-                Contact
-              </NavLink>
+              {user?.email && (
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "active nav-link fw-bold px-3" : "nav-link px-3"
+                  }
+                  to={"/bookings"}
+                >
+                  My Bookings
+                </NavLink>
+              )}
             </Nav>
             <div className="d-flex align-items-center">
               {user && (
@@ -89,14 +91,16 @@ const NavigationBar = () => {
                   Logout
                 </Button>
               ) : (
-                <Link to={"/login"} className="btn btn-primary mx-2">Login</Link>
+                <Link to={"/login"} className="btn btn-primary mx-2">
+                  Login
+                </Link>
               )}
-              <Link
+              {/* <Link
                 className="btn btn-outline-warning px-3"
                 to={"/appointment"}
               >
                 Appointment
-              </Link>
+              </Link> */}
             </div>
           </Navbar.Collapse>
         </Container>
