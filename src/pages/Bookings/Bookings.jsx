@@ -55,7 +55,6 @@ const Bookings = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.modifiedCount);
         if (data.modifiedCount > 0) {
           // update state
           const remaining = bookings.filter((booking) => booking._id !== id);

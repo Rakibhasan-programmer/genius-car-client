@@ -10,7 +10,9 @@ const Service = () => {
       .then((res) => res.json())
       .then((data) => {
         setServices(data);
-        setLoader(false);
+        setTimeout(() => {
+          setLoader(false);
+        }, 1000);
       })
       .catch((err) => console.log(err));
   }, []);

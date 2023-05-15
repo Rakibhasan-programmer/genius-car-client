@@ -1,12 +1,16 @@
 import React, { useContext } from "react";
 import { Button } from "react-bootstrap";
 import { FaGithub, FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import login from "../../assets/images/login/login.svg";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Login = () => {
   const { loginUser } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const redirect = location?.state?.from?.pathname || "/";
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -20,6 +24,7 @@ const Login = () => {
       .then((res) => {
         const user = res.user;
         // console.log(res.user);
+        navigate(redirect, {replace: true});
       })
       .catch((err) => console.log(err.message));
 
