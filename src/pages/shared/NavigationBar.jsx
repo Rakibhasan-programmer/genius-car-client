@@ -9,7 +9,9 @@ const NavigationBar = () => {
 
   const handleLogOut = () => {
     logOut()
-      .then(() => {})
+      .then(() => {
+        localStorage.removeItem("jwt-token");
+      })
       .catch((err) => console.log(err.message));
   };
   return (

@@ -2,17 +2,30 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Button, Table } from "react-bootstrap";
 import swal from "sweetalert";
+import { useNavigate } from "react-router-dom";
 
 const Bookings = () => {
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
   const url = `http://localhost:5000/bookings?email=${user?.email}`;
   useEffect(() => {
-    fetch(url)
+    fetch(url, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwt-token')}`
+      }
+    })
       .then((res) => res.json())
-      .then((data) => setBookings(data))
+      .then((data) => {
+        if(!data.error){
+          setBookings(data)
+        }else{
+          navigate("/");
+        }
+      })
       .catch((err) => console.log(err));
-  }, []);
+  }, [url, navigate]);
 
   const handleDelete = (id) => {
     swal({

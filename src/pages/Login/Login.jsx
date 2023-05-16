@@ -23,8 +23,25 @@ const Login = () => {
     loginUser(email, password)
       .then((res) => {
         const user = res.user;
+        const loggedUser = {
+          email: user?.email,
+        };
+
+        // json web token
+        fetch("http://localhost:5000/jwt", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(loggedUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            // console.log(data);
+            // setting the access token to local storage
+            localStorage.setItem("jwt-token", data?.token);
+          });
+
         // console.log(res.user);
-        navigate(redirect, {replace: true});
+        navigate(redirect, { replace: true });
       })
       .catch((err) => console.log(err.message));
 
